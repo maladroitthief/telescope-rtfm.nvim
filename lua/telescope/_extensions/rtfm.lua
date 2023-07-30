@@ -13,7 +13,7 @@ local function search(opts)
   opts.fallback = vim.F.if_nil(opts.fallback, true)
   opts.file_ignore_patterns = {}
 
-  local langs = vim.split(opts.lang, ",", { plain = true })
+  local langs = vim.split(opts.lang, ",", true)
   if opts.fallback and not vim.tbl_contains(langs, "en") then
     table.insert(langs, "en")
   end
@@ -52,11 +52,11 @@ local function search(opts)
   local delimiter = string.char(9)
   for _, lang in ipairs(langs) do
     for _, file in ipairs(tag_files[lang] or {}) do
-      local lines = vim.split(Path:new(file):read(), "\n", { plain = true })
+      local lines = vim.split(Path:new(file):read(), "\n", true)
       for _, line in ipairs(lines) do
         -- TODO: also ignore tagComment starting with ';'
         if not line:match "^!_TAG_" then
-          local fields = vim.split(line, delimiter, { plain = true })
+          local fields = vim.split(line, delimiter, true)
           if #fields == 3 and not tags_map[fields[1]] then
             if fields[1] ~= "help-tags" or fields[2] ~= "tags" then
               table.insert(tags, {
