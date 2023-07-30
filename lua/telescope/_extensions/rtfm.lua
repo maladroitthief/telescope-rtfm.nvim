@@ -99,7 +99,7 @@ local function search(opts)
             end
 
             actions.close(prompt_bufnr)
-            os.execute("tmux neww bash -c \"nvim --cmd ':help " .. selection.value .. " | only'\"")
+            os.execute("tmux neww bash -c \"nvim -c ':help " .. selection.value .. " | only'\"")
           end)
 
           return true
